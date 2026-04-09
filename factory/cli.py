@@ -11,6 +11,7 @@ from factory.core import (
     portfolio_warning,
     write_batch,
 )
+from factory.mobile import androidize_source
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -27,6 +28,18 @@ def build_parser() -> argparse.ArgumentParser:
     list_parser.add_argument("--strategy", default=None, help="Path to a JSON strategy file.")
     list_parser.add_argument("--limit", type=int, default=10, help="Number of concepts to print.")
     list_parser.add_argument("--seed", type=int, default=7, help="Random seed.")
+
+    android_parser = subparsers.add_parser(
+        "androidize",
+        help="Convert a generated app or batch into Android-ready Capacitor scaffolds.",
+    )
+    android_parser.add_argument("--source", required=True, help="Path to a generated app folder or batch folder.")
+    android_parser.add_argument("--output", default="android_exports", help="Output directory.")
+    android_parser.add_argument(
+        "--package-prefix",
+        default="com.agentichub",
+        help="Reverse-domain prefix to use for generated Android package ids.",
+    )
 
     return parser
 
@@ -51,6 +64,17 @@ def cmd_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_androidize(args: argparse.Namespace) -> int:
+    output_path = androidize_source(
+        source=args.source,
+        output_dir=args.output,
+        package_prefix=args.package_prefix,
+    )
+    print(f"Android exports ready: {output_path.resolve()}")
+    print("Next step: npm install, npx cap add android, then build the signed AAB in Android Studio.")
+    return 0
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
@@ -58,6 +82,8 @@ def main() -> int:
         return cmd_batch(args)
     if args.command == "list":
         return cmd_list(args)
+    if args.command == "androidize":
+        return cmd_androidize(args)
     raise SystemExit(f"Unsupported command: {args.command}")
 
 

@@ -8,6 +8,7 @@ Le systeme fait trois choses :
 - applique des garde-fous de risque avant generation
 - scaffold des dossiers d'apps avec prototype web, docs store et plan de monetisation
 - prepare aussi un handoff Figma et une structure GitHub par app
+- peut convertir un batch genere en scaffold Android-ready via Capacitor
 
 ## Pourquoi cette approche
 
@@ -35,10 +36,21 @@ Pour chaque app :
 - `.github/` : templates minimaux pour lancer un repo par app
 - `web/` : prototype HTML/CSS/JS mobile-first
 
+Apres export Android :
+
+- `package.json`
+- `capacitor.config.json`
+- `mobile/android-config.json`
+- `docs/android-release.md`
+- `docs/admob-integration.md`
+- `docs/play-store-checklist.md`
+- `fastlane/metadata/android/en-US/*`
+
 Au niveau du batch :
 
 - `portfolio/github-repo-plan.md`
 - `portfolio/figma-batch-handoff.md`
+- `android-batch.json`
 
 ## Quick start
 
@@ -66,6 +78,21 @@ Verification locale simple :
 python -m unittest discover -s tests
 ```
 
+Export Android d'un batch deja genere :
+
+```bash
+python -m factory.cli androidize --source generated_v4 --output android_exports
+```
+
+Puis, dans une app exportee :
+
+```bash
+npm install
+npm run cap:add:android
+npm run cap:sync
+npm run cap:open:android
+```
+
 ## Philosophie de scaling
 
 Ne pas essayer de publier 100 apps d'un coup. Le bon rythme est :
@@ -89,6 +116,10 @@ Les plugins les plus utiles ensuite seront :
 
 - `GitHub` : exploitable pour brancher des repos reels quand tu me donnes un owner/repo
 - `Figma` : le programme sort deja les handoffs et cibles Code Connect; si tu me donnes un file key ou une URL Figma, je pourrai travailler dans le fichier
+
+## Capacitor et release
+
+Le scaffold Android utilise Capacitor pour emballer directement le prototype web existant. L'inference ici est volontaire : pour scaler vite sur Android avec des jeux casual simples, cette voie est nettement plus rapide qu'une pile mobile native separee par app.
 
 ## Sources officielles a garder en tete
 
