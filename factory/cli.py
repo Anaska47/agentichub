@@ -11,6 +11,7 @@ from factory.core import (
     portfolio_warning,
     write_batch,
 )
+from factory.doctor import render_doctor_json, render_doctor_report
 from factory.mobile import androidize_source
 
 
@@ -40,6 +41,9 @@ def build_parser() -> argparse.ArgumentParser:
         default="com.agentichub",
         help="Reverse-domain prefix to use for generated Android package ids.",
     )
+
+    doctor_parser = subparsers.add_parser("doctor", help="Check whether the local machine is ready for Android packaging.")
+    doctor_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON output.")
 
     return parser
 
@@ -75,6 +79,14 @@ def cmd_androidize(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_doctor(args: argparse.Namespace) -> int:
+    if args.json:
+        print(render_doctor_json())
+    else:
+        print(render_doctor_report())
+    return 0
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
@@ -84,6 +96,8 @@ def main() -> int:
         return cmd_list(args)
     if args.command == "androidize":
         return cmd_androidize(args)
+    if args.command == "doctor":
+        return cmd_doctor(args)
     raise SystemExit(f"Unsupported command: {args.command}")
 
 

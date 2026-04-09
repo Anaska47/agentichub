@@ -78,6 +78,12 @@ Verification locale simple :
 python -m unittest discover -s tests
 ```
 
+Diagnostic machine pour le packaging Android :
+
+```bash
+python -m factory.cli doctor
+```
+
 Export Android d'un batch deja genere :
 
 ```bash

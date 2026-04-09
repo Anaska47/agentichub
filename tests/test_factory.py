@@ -3,6 +3,7 @@ from pathlib import Path
 import shutil
 
 from factory.core import build_candidates, load_strategy, pick_batch, write_batch
+from factory.doctor import collect_environment_status
 from factory.mobile import androidize_source, build_package_id
 
 
@@ -72,6 +73,11 @@ class FactoryTests(unittest.TestCase):
             for path in (batch_dir, export_dir):
                 if path.exists():
                     shutil.rmtree(path)
+
+    def test_doctor_reports_expected_tools(self):
+        statuses = collect_environment_status()
+        names = {item.name for item in statuses}
+        self.assertTrue({"python", "node", "npm", "git", "java", "android-sdk", "adb"}.issubset(names))
 
 
 if __name__ == "__main__":
