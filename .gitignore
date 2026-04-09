@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+generated/
+generated_v2/
+generated_v3/
+generated_v4/
+tests/.tmp-output/

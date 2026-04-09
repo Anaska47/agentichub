@@ -1,0 +1,39 @@
+{
+  "portfolio_name": "casual-scale",
+  "mechanics": [
+    "lane-dodge",
+    "tap-burst",
+    "survival-harvest"
+  ],
+  "themes": [
+    "space salvage",
+    "ocean rescue",
+    "neon courier",
+    "jungle relic",
+    "snow sprint",
+    "desert convoy",
+    "sky garden",
+    "factory escape",
+    "volcano courier",
+    "moon orchard"
+  ],
+  "meta_loops": [
+    "unlockable skins",
+    "daily missions",
+    "streak rewards",
+    "world progression"
+  ],
+  "art_styles": [
+    "clean flat arcade",
+    "bold toy-like shapes",
+    "retro neon panels",
+    "soft paper-cut layers"
+  ],
+  "reward_types": [
+    "extra life",
+    "score booster",
+    "double coins",
+    "shield charge"
+  ],
+  "interstitial_cadence": "after every 3 runs"
+}
